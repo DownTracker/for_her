@@ -64,7 +64,7 @@ const letterContent = [
   {
     image: null, // assets/images/09.jpg
     paragraphs: [
-      "Happy birthday, Love.",
+      "Happy motmot and birthday, lovelove nako.",
       "I may not have much na mahatag nako nimo karun, but I gave you something nga kaya nako buhaton",
       "my time, my effort, my creativity, and my heart hehe just like this song, I like Me Better when I'm With you."
     ]
@@ -74,7 +74,8 @@ const letterContent = [
     paragraphs: [
       "I hope you like it.",
       "I love you always mwa mwa mwa 😘"
-    ]
+    ],
+   image: null // assets/images/11.jpg
   }
 ];
 
