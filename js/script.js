@@ -222,9 +222,10 @@ letterContent.forEach(() => {
 });
 const progressDotEls = [...progressDotsEl.children];
 
-function buildCardEl(data) {
+function buildCardEl(data, index) {
   const card = document.createElement("div");
   card.className = "letter-card";
+  card.dataset.index = index;
 
   const imgWrap = document.createElement("div");
   imgWrap.className = "card-image";
@@ -253,12 +254,33 @@ function buildCardEl(data) {
   return card;
 }
 
-function renderCard() {
-  cardStage.innerHTML = "";
-  cardStage.appendChild(buildCardEl(letterContent[currentCard]));
+// build the whole stack once — cards stay in the DOM the whole time,
+// only their data-depth attribute changes, so the peeking-stack
+// transitions animate smoothly instead of popping in and out.
+const cardEls = letterContent.map((data, i) => {
+  const el = buildCardEl(data, i);
+  cardStage.appendChild(el);
+  return el;
+});
 
+function depthAttr(diff) {
+  if (diff < 0) return "passed";
+  if (diff === 0) return "0";
+  if (diff === 1) return "1";
+  if (diff === 2) return "2";
+  return "back";
+}
+
+function updateStack() {
+  cardEls.forEach((el, i) => {
+    el.dataset.depth = depthAttr(i - currentCard);
+  });
   progressLabel.textContent = `${currentCard + 1} / ${letterContent.length}`;
   progressDotEls.forEach((d, i) => d.classList.toggle("active", i === currentCard));
+}
+
+function renderCard() {
+  updateStack();
 }
 
 function goToCard(delta) {
@@ -270,26 +292,45 @@ function goToCard(delta) {
     return;
   }
   currentCard = next;
-  renderCard();
+  updateStack();
 }
 
-// swipe / tap handling
+// swipe / tap handling — only the top card (depth 0) receives
+// pointer events, so this always drags the currently active card.
 let dragStartX = null;
 let dragging = false;
+let activeFrontEl = null;
 
 cardStage.addEventListener("pointerdown", (e) => {
+  const front = e.target.closest('.letter-card[data-depth="0"]');
+  if (!front) return;
   dragStartX = e.clientX;
   dragging = true;
+  activeFrontEl = front;
+  activeFrontEl.classList.add("dragging");
+});
+
+cardStage.addEventListener("pointermove", (e) => {
+  if (!dragging || !activeFrontEl) return;
+  const deltaX = e.clientX - dragStartX;
+  activeFrontEl.style.transform = `translateX(${deltaX}px) rotate(${deltaX / 24}deg)`;
 });
 
 cardStage.addEventListener("pointerup", (e) => {
   if (!dragging || dragStartX === null) return;
   dragging = false;
   const deltaX = e.clientX - dragStartX;
+  const el = activeFrontEl;
+  activeFrontEl = null;
+
+  if (el) {
+    el.classList.remove("dragging");
+    el.style.transform = "";
+  }
 
   if (Math.abs(deltaX) > 50) {
     goToCard(deltaX < 0 ? 1 : -1);
-  } else {
+  } else if (Math.abs(deltaX) < 8) {
     // treat as a tap: right side of the card = next, left side = back
     const rect = cardStage.getBoundingClientRect();
     const tapX = e.clientX - rect.left;
@@ -332,3 +373,7 @@ document.getElementById("replayBtn").addEventListener("click", () => {
   showScreen("letter");
   renderCard();
 });
+
+// set initial stack depths so cards are positioned correctly
+// even before the letter screen is first shown
+updateStack();
