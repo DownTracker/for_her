@@ -14,7 +14,7 @@ const letterContent = [
   {
     image: null, // assets/images/01.jpg
     paragraphs: [
-      "I know Iwakoy mahatag nga something expensive sa imoha this year and to be honest ba, I wished I could give you more jud hayss. But I wanted to make something nga gikan jud nako like something I could build with my own hands ba and fill with the things na di nako masulti tarung in person.",
+      "I know wakoy mahatag nga something expensive sa imoha this year and to be honest ba, I wished I could give you more jud hayss. But I wanted to make something nga gikan jud nako like something I could build with my own hands ba and fill with the things na di nako masulti tarung in person.",
       "So I made this little website for you lovelove."
     ]
   },
