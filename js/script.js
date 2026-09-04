@@ -65,15 +65,15 @@ const letterContent = [
     image: null, // assets/images/09.jpg
     paragraphs: [
       "Happy birthday, Love.",
-      "I may not have much to give you right now, but I gave you something I know how to make",
-      "a little piece of my time, my effort, my creativity, and my heart."
+      "I may not have much na mahatag nako nimo karun, but I gave you something nga kaya nako buhaton",
+      "my time, my effort, my creativity, and my heart hehe just like this song, I like Me Better when I'm With you."
     ]
   },
   {
     image: null, // assets/images/10.jpg
     paragraphs: [
       "I hope you like it.",
-      "I love you always. Mwa mwa mwa 😘❤️"
+      "I love you always mwa mwa mwa 😘"
     ]
   }
 ];
