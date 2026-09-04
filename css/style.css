@@ -318,8 +318,9 @@ button {
 .card-stage {
   position: relative;
   width: min(340px, 86vw);
-  height: min(560px, 68vh);
+  height: min(500px, 58vh);
   margin-top: 20px;
+  overflow: visible;
 }
 
 .letter-card {
@@ -333,9 +334,56 @@ button {
   padding: 22px;
   box-shadow: 0 18px 40px rgba(5, 14, 33, 0.45);
   border: 1px solid rgba(255,255,255,0.5);
-  transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+  transition: transform 0.4s var(--ease), opacity 0.4s var(--ease), filter 0.4s var(--ease);
+  transform-origin: center bottom;
   touch-action: pan-y;
   overflow: hidden;
+  will-change: transform;
+}
+
+/* stack depths — set via JS as data-depth on each card.
+   0 = the active, readable card on top.
+   1 / 2 = cards peeking out just below it.
+   back = further back in the stack, not yet visible.
+   passed = already read, swiped off to the side. */
+.letter-card[data-depth="0"] {
+  transform: translateY(0) scale(1);
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.letter-card[data-depth="1"] {
+  transform: translateY(18px) scale(0.94);
+  z-index: 4;
+  filter: brightness(0.93);
+  box-shadow: 0 10px 24px rgba(5, 14, 33, 0.35);
+  pointer-events: none;
+}
+
+.letter-card[data-depth="2"] {
+  transform: translateY(32px) scale(0.88);
+  z-index: 3;
+  filter: brightness(0.85);
+  box-shadow: 0 6px 16px rgba(5, 14, 33, 0.3);
+  pointer-events: none;
+}
+
+.letter-card[data-depth="back"] {
+  transform: translateY(42px) scale(0.84);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.letter-card[data-depth="passed"] {
+  transform: translateX(-130%) translateY(0) rotate(-10deg) scale(0.92);
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.letter-card.dragging {
+  transition: none;
 }
 
 /* Placeholder area for a photo per letter section.
@@ -385,7 +433,7 @@ button {
 .progress-dots {
   display: flex;
   gap: 6px;
-  margin-top: 18px;
+  margin-top: 46px;
 }
 
 .progress-dots .p-dot {
