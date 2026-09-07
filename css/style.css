@@ -518,7 +518,7 @@ button {
    a consistent gap instead of colliding. */
 .note-callout .note-arrow {
   position: absolute;
-  top: -45px;
+  top: -65px;
   right: 60px;
   width: 110px;
   height: auto;
@@ -527,7 +527,7 @@ button {
 }
 
 .note-callout .note-text {
-  top: -70px;
+  top: -90px;
   position: absolute;
   bottom: 100%;      /* bottom edge locks to the container's top edge */
   margin-bottom: 4px; /* small gap above the arrow */
