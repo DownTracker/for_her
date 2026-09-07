@@ -496,7 +496,10 @@ button {
   left: -9999px;
   z-index: 90;
   width: 160px;
-  height: 150px; /* just needs to comfortably contain arrow + text, not exact */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
   color: var(--cream);
   pointer-events: none;
   opacity: 0;
@@ -509,29 +512,14 @@ button {
   transform: translateY(0);
 }
 
-/* arrow and text are independently positioned inside the same box
-   instead of stacking in document flow — that's what let the text
-   drift below the arrow depending on its height. Absolute + z-index
-   keeps the arrow visually on top while letting the text sit at a
-   fixed spot near the top, matching the reference art. */
-.note-callout .note-arrow {
-  position: absolute;
-  top: 34px;
-  right: 0;
-  width: 110px;
-  height: auto;
-  z-index: 2;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55));
-}
-
+/* flex order (not DOM order) puts text above the arrow — flow
+   layout means the box's height adapts automatically to however
+   many lines the note wraps to, so short and long notes both get
+   a consistent gap instead of colliding. */
 .note-callout .note-text {
-  position: absolute;
-  top: 0;
-  right: 6px;
-  z-index: 1;
+  order: 1;
+  margin: 0 6px 4px 0;
   width: 140px;
-  margin: 0;
-  text-align: right;
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
@@ -540,6 +528,12 @@ button {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
 }
 
+.note-callout .note-arrow {
+  order: 2;
+  width: 110px;
+  height: auto;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55));
+}
 /* =========================================================
    LIGHTBOX — tap a photo to expand it
    ========================================================= */
