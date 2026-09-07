@@ -27,7 +27,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/02.jpg",
+    image: "assets/images/02.jpeg",
     note: "test daw",
     paragraphs: [
       "It may not be perfect and it definitely isn't worth as much sa uban gifts na maihatag sa uban nimo, but every part of it was made with you in mind. Every word here is something I genuinely wanted you to have and remember."
@@ -109,6 +109,13 @@ const screens = {
 function showScreen(name) {
   Object.values(screens).forEach((el) => el.classList.remove("active"));
   screens[name].classList.add("active");
+
+  if (name === "letter") {
+    // wait a frame so the now-visible cards have a real layout to measure
+    requestAnimationFrame(refreshNoteForCurrentCard);
+  } else if (typeof hideNoteCallout === "function") {
+    hideNoteCallout();
+  }
 }
 
 /* =========================================================
@@ -271,6 +278,13 @@ function hideNoteCallout() {
 }
 
 function refreshNoteForCurrentCard() {
+  // never show the note unless we're actually on the letter screen —
+  // otherwise it measures a hidden (display:none) card and flies
+  // off to the top-left corner of the page
+  if (!screens.letter.classList.contains("active")) {
+    hideNoteCallout();
+    return;
+  }
   const data = letterContent[currentCard];
   const cardImageEl = cardEls[currentCard]?.querySelector(".card-image");
   if (data && data.note) {
@@ -494,7 +508,7 @@ function stopHearts() {
 function spawnHeart() {
   const heart = document.createElement("span");
   heart.className = "heart-particle";
-  heart.textContent = Math.random() > 0.5 ? "🤍" : "❤️";
+  heart.textContent = Math.random() > 0.5 ? "🤍" : "🤍";
   heart.style.left = `${Math.random() * 100}%`;
   heart.style.setProperty("--drift", `${(Math.random() - 0.5) * 80}px`);
   const duration = 5 + Math.random() * 3;
