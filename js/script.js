@@ -27,7 +27,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/02.jpeg",
+    image: "assets/images/02.jpg",
     note: "test daw",
     paragraphs: [
       "It may not be perfect and it definitely isn't worth as much sa uban gifts na maihatag sa uban nimo, but every part of it was made with you in mind. Every word here is something I genuinely wanted you to have and remember."
@@ -41,7 +41,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/04.jpeg",
+    image: "assets/images/04.jpg",
     note: "note here",
     paragraphs: [
       "I don't want to pretend nga atoang relationship has always been perfect. Kay dijud siya perfect. We've both made mistakes, nay time gipang kapoy ta, and there were times when we struggled to understand each other. Pero despite tanan ana, daghan jud kayong moments na grateful kaayo kos imoha ."
@@ -63,7 +63,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/07.png",
+    image: "assets/images/07.jpg",
     note: "note here",
     paragraphs: [
       `I hope nga kaning tuiga will brings you more peace, more happiness, more opportunities, and more moments where you can look at yourself and say, "I'm doing okay and nana koy Deym" hahaha`
@@ -245,21 +245,30 @@ function positionNoteCallout(targetEl, text) {
 
   noteTextEl.textContent = text;
 
-  // measure the callout's real rendered size first (off-screen)
   noteCallout.style.transition = "none";
   noteCallout.classList.add("visible");
-  const calloutRect = noteCallout.getBoundingClientRect();
+
+  // place the callout at the top-left corner first so the arrow
+  // image's on-screen position tells us exactly how far its tip
+  // sits from the callout's own top-left corner
+  noteCallout.style.left = "0px";
+  noteCallout.style.top = "0px";
+
+  const arrowEl = noteCallout.querySelector(".note-arrow");
+  const arrowRect = arrowEl.getBoundingClientRect();
+
+  // the arrowhead in note-arrow.png sits near the right edge of the
+  // image, a little past its vertical middle
+  const tipOffsetX = arrowRect.left + arrowRect.width * 0.98;
+  const tipOffsetY = arrowRect.top + arrowRect.height * 0.82;
+
   const targetRect = targetEl.getBoundingClientRect();
+  const desiredTipX = targetRect.left + 16;
+  const desiredTipY = targetRect.top + 12;
 
-  // the dashed arrow's tip sits ~93px in from the svg's right edge
-  // and ~22px up from its bottom edge (see the note-arrow path) —
-  // since the svg is flush right/bottom of the callout, that gives
-  // us the tip's offset from the callout's own top-left corner.
-  const tipOffsetX = calloutRect.width - 93;
-  const tipOffsetY = calloutRect.height - 22;
-
-  let left = targetRect.left + 16 - tipOffsetX;
-  let top = targetRect.top + 12 - tipOffsetY;
+  const calloutRect = noteCallout.getBoundingClientRect();
+  let left = desiredTipX - tipOffsetX;
+  let top = desiredTipY - tipOffsetY;
 
   left = Math.max(10, Math.min(left, window.innerWidth - calloutRect.width - 10));
   top = Math.max(10, top);
@@ -508,7 +517,7 @@ function stopHearts() {
 function spawnHeart() {
   const heart = document.createElement("span");
   heart.className = "heart-particle";
-  heart.textContent = Math.random() > 0.5 ? "🤍" : "🤍";
+  heart.textContent = Math.random() > 0.5 ? "🤍" : "❤️";
   heart.style.left = `${Math.random() * 100}%`;
   heart.style.setProperty("--drift", `${(Math.random() - 0.5) * 80}px`);
   const duration = 5 + Math.random() * 3;
