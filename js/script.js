@@ -41,7 +41,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/04.jpg",
+    image: "assets/images/04.jpeg",
     note: "note here",
     paragraphs: [
       "I don't want to pretend nga atoang relationship has always been perfect. Kay dijud siya perfect. We've both made mistakes, nay time gipang kapoy ta, and there were times when we struggled to understand each other. Pero despite tanan ana, daghan jud kayong moments na grateful kaayo kos imoha ."
@@ -63,7 +63,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/07.jpg",
+    image: "assets/images/07.png",
     note: "note here",
     paragraphs: [
       `I hope nga kaning tuiga will brings you more peace, more happiness, more opportunities, and more moments where you can look at yourself and say, "I'm doing okay and nana koy Deym" hahaha`
