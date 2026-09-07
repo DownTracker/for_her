@@ -504,9 +504,11 @@ button {
 }
 
 .note-callout .note-arrow {
-  color: var(--cream);
-  opacity: 0.9;
+  width: 110px;
+  height: auto;
+  display: block;
   margin-top: 2px;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55));
 }
 
 /* =========================================================
