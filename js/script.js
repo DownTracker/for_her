@@ -324,6 +324,22 @@ function hideNoteCallout() {
   noteCallout.classList.remove("visible");
 }
 
+// the arrow/caption sits right on top of the photo it points at, so
+// let tapping it act as another way to expand (or close) that same
+// photo instead of just being an obstacle in the way of the photo
+noteCallout.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (lightbox.classList.contains("open")) {
+    closeLightbox();
+    return;
+  }
+  if (!screens.letter.classList.contains("active")) return;
+  const data = letterContent[currentCard];
+  if (data && data.image) {
+    openLightbox(data.image, data.note);
+  }
+});
+
 function refreshNoteForCurrentCard() {
   // never show the note unless we're actually on the letter screen —
   // otherwise it measures a hidden (display:none) card and flies
