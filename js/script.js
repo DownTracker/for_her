@@ -263,8 +263,12 @@ function positionNoteCallout(targetEl, text) {
   const tipOffsetY = arrowRect.top + arrowRect.height * 0.82;
 
   const targetRect = targetEl.getBoundingClientRect();
-  const desiredTipX = targetRect.left + 16;
-  const desiredTipY = targetRect.top + 12;
+  // pulled the tip target further down/right from the photo's top-left
+  // corner (was +16 / +12) so the whole callout sits lower and the
+  // arrow actually reaches the photo instead of landing short of it
+  // near the top of the screen
+  const desiredTipX = targetRect.left + 22;
+  const desiredTipY = targetRect.top + 40;
 
   const calloutRect = noteCallout.getBoundingClientRect();
   let left = desiredTipX - tipOffsetX;
