@@ -302,7 +302,7 @@ function positionNoteCallout(targetEl, text) {
   // whole callout sits lower and the arrow actually lands ON the
   // photo instead of stopping short above it
   const desiredTipX = targetRect.left + 6;
-  const desiredTipY = targetRect.top + 5;
+  const desiredTipY = targetRect.top + 1;
 
   const calloutRect = noteCallout.getBoundingClientRect();
   let left = desiredTipX - tipOffsetX;
