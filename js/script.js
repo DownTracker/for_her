@@ -520,19 +520,16 @@ function endDrag(e, commit) {
     return;
   }
 
-  const isTap = Math.abs(deltaX) < TAP_THRESHOLD;
-
-  if (isTap) {
-    const imgEl = imgTarget ? imgTarget.querySelector("img") : null;
-    if (imgEl) {
-      openLightbox(imgEl.src, letterContent[currentCard].note);
-      dragStartX = null;
-      return;
-    }
-  }
+  const imgEl = imgTarget ? imgTarget.querySelector("img") : null;
 
   if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
+    // a real swipe always changes the card, even if it started on the photo
     goToCard(deltaX < 0 ? 1 : -1);
+  } else if (imgEl) {
+    // any small/ambiguous movement that started on the photo opens it —
+    // touch input jitters more than TAP_THRESHOLD, especially near the
+    // edges of the photo, so we can't require an exact still tap here
+    openLightbox(imgEl.src, letterContent[currentCard].note);
   } else {
     // small/ambiguous movement that wasn't on the photo — treat it as
     // a tap-to-advance: right side of the card = next, left = back
