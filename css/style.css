@@ -510,6 +510,11 @@ button {
 .note-callout.visible {
   opacity: 1;
   transform: translateY(0);
+  /* it sits on top of the photo it's pointing at — let it be tapped
+     as another way to open/close that same photo instead of just
+     blocking the tap silently */
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 /* flex order (not DOM order) puts text above the arrow — flow
