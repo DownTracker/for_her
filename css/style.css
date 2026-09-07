@@ -354,6 +354,11 @@ button {
   touch-action: pan-y;
   overflow: hidden;
   will-change: transform;
+  /* stop iOS's long-press "save photo" callout and text-selection
+     highlight from hijacking the pointer sequence mid-tap/mid-swipe */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* stack depths — set via JS as data-depth on each card.
@@ -429,6 +434,13 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* let taps/drags pass straight through to .card-image (which our
+     JS already targets via closest()), so the browser never treats
+     the <img> itself as the gesture target and offers its own
+     drag/long-press handling instead of ours */
+  pointer-events: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
 }
 
 .card-image-placeholder-text {
@@ -576,6 +588,9 @@ button {
   border-radius: 18px;
   box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
   object-fit: contain;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 /* =========================================================
