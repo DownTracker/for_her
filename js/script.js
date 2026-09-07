@@ -181,10 +181,44 @@ const bgMusic = document.getElementById("bgMusic");
 const revealWordEl = document.getElementById("revealWord");
 const blueCurtain = document.getElementById("blueCurtain");
 
+// remember the music's normal volume so fades can ramp back up to it
+const BASE_VOLUME = 1;
+bgMusic.volume = BASE_VOLUME;
+let fadeInterval = null;
+
+function fadeAudioOut(durationMs = 1500) {
+  if (fadeInterval) clearInterval(fadeInterval);
+  const steps = 30;
+  const stepTime = durationMs / steps;
+  const startVolume = bgMusic.volume;
+  let step = 0;
+  fadeInterval = setInterval(() => {
+    step += 1;
+    const t = step / steps;
+    bgMusic.volume = Math.max(0, startVolume * (1 - t));
+    if (step >= steps) {
+      clearInterval(fadeInterval);
+      fadeInterval = null;
+      bgMusic.pause();
+    }
+  }, stepTime);
+}
+
+function resetAudioForReplay() {
+  if (fadeInterval) {
+    clearInterval(fadeInterval);
+    fadeInterval = null;
+  }
+  bgMusic.volume = BASE_VOLUME;
+  bgMusic.currentTime = 0;
+  bgMusic.play().catch(() => {});
+}
+
 function unlock() {
   showScreen("reveal");
 
   // user gesture (the 4th numpad tap) makes this autoplay-safe
+  bgMusic.volume = BASE_VOLUME;
   bgMusic.currentTime = 0;
   bgMusic.play().catch(() => {
     /* if the browser still blocks it, she can tap anywhere to retry */
@@ -211,10 +245,10 @@ function playWordSequence(i = 0) {
 function riseCurtain() {
   setTimeout(() => {
     blueCurtain.classList.add("rise");
-    // once the curtain fully covers the screen, swap what's underneath
+    // once the curtain has fully faded in over the screen, swap
+    // what's underneath, then let the curtain fade back out
     setTimeout(() => {
       showScreen("intro");
-      // let the intro screen settle in, then let the curtain fall away
       setTimeout(() => {
         blueCurtain.classList.remove("rise");
       }, 250);
@@ -263,19 +297,18 @@ function positionNoteCallout(targetEl, text) {
   const tipOffsetY = arrowRect.top + arrowRect.height * 0.82;
 
   const targetRect = targetEl.getBoundingClientRect();
-  // pulled the tip target further down/right from the photo's top-left
-  // corner (was +16 / +12) so the whole callout sits lower and the
-  // arrow actually reaches the photo instead of landing short of it
-  // near the top of the screen
-  const desiredTipX = targetRect.left + 22;
-  const desiredTipY = targetRect.top + 40;
+  // pushed further down/right from the photo's top-left corner so the
+  // whole callout sits lower and the arrow actually lands ON the
+  // photo instead of stopping short above it
+  const desiredTipX = targetRect.left + 28;
+  const desiredTipY = targetRect.top + 66;
 
   const calloutRect = noteCallout.getBoundingClientRect();
   let left = desiredTipX - tipOffsetX;
   let top = desiredTipY - tipOffsetY;
 
   left = Math.max(10, Math.min(left, window.innerWidth - calloutRect.width - 10));
-  top = Math.max(10, top);
+  top = Math.max(10, Math.min(top, window.innerHeight - calloutRect.height - 10));
 
   noteCallout.style.left = `${left}px`;
   noteCallout.style.top = `${top}px`;
@@ -415,6 +448,9 @@ function goToCard(delta) {
   const next = currentCard + delta;
   if (next < 0) return;
   if (next >= letterContent.length) {
+    // fade the music out as she leaves the letter for the closing
+    // screen, so it doesn't fight with the anniversary video's audio
+    fadeAudioOut();
     showScreen("closing");
     startHearts();
     return;
@@ -510,10 +546,23 @@ cardStage.addEventListener("pointerup", (e) => endDrag(e, true));
 cardStage.addEventListener("pointercancel", (e) => endDrag(e, false));
 
 /* =========================================================
-   SCREEN 5 — CLOSING HEARTS + REPLAY
+   SCREEN 5 — CLOSING HEARTS + REPLAY + VIDEO
    ========================================================= */
 const heartsLayer = document.getElementById("heartsLayer");
+const closingVideo = document.getElementById("closingVideo");
 let heartsTimer = null;
+
+// hand-drawn-style heart outline, matching the swipe-arrow line-art
+// look, in three palette colors instead of emoji
+const HEART_COLORS = ["var(--cream)", "var(--accent-blue)", "var(--gold)"];
+const HEART_PATH =
+  "M12 21s-7.2-4.6-10-9.3C.3 8.8 1.7 5 5.3 4.2c2-.5 4 .3 5.2 2 .3.4.8 1 1.5 1.9.7-.9 1.2-1.5 1.5-1.9 1.2-1.7 3.2-2.5 5.2-2 3.6.8 5 4.6 3.3 7.5-2.8 4.7-10 9.3-10 9.3z";
+
+function makeHeartSvg(color) {
+  return `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="${HEART_PATH}" stroke="${color}" stroke-width="1.6" stroke-linejoin="round" fill="${color}" fill-opacity="0.18"/>
+  </svg>`;
+}
 
 function startHearts() {
   stopHearts();
@@ -528,7 +577,8 @@ function stopHearts() {
 function spawnHeart() {
   const heart = document.createElement("span");
   heart.className = "heart-particle";
-  heart.textContent = Math.random() > 0.5 ? "🤍" : "❤️";
+  const color = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
+  heart.innerHTML = makeHeartSvg(color);
   heart.style.left = `${Math.random() * 100}%`;
   heart.style.setProperty("--drift", `${(Math.random() - 0.5) * 80}px`);
   const duration = 5 + Math.random() * 3;
@@ -537,11 +587,21 @@ function spawnHeart() {
   setTimeout(() => heart.remove(), duration * 1000);
 }
 
+// safety net: if she taps play on the anniversary video before the
+// music has fully faded (e.g. she replayed the letter first), duck
+// the music out of the way immediately so she can hear the video
+closingVideo.addEventListener("play", () => {
+  if (bgMusic.volume > 0 && !bgMusic.paused) {
+    fadeAudioOut(400);
+  }
+});
+
 document.getElementById("replayBtn").addEventListener("click", () => {
   stopHearts();
   currentCard = 0;
   showScreen("letter");
   renderCard();
+  resetAudioForReplay();
 });
 
 // set initial stack depths so cards are positioned correctly
