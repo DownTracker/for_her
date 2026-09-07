@@ -428,6 +428,10 @@ button {
   justify-content: center;
   overflow: hidden;
   position: relative;
+  /* the browser must never take this gesture over for its own
+     scrolling/zooming — even briefly — or a tap here randomly loses
+     to native handling instead of opening the photo */
+  touch-action: none;
 }
 
 .card-image img {
