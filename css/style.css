@@ -475,7 +475,10 @@ button {
   position: fixed;
   top: -9999px;
   left: -9999px;
-  z-index: 60;
+  /* was 60 — raised above .lightbox (z-index 80) so the note/arrow
+     stays visible on top of the expanded photo instead of hiding
+     behind it */
+  z-index: 90;
   width: 150px;
   display: flex;
   flex-direction: column;
