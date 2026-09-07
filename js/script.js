@@ -8,75 +8,77 @@ const REVEAL_WORDS = ["HAPPY", "BIRTHDAY", "LOVEYYY NAKOOO"];
 // written — do not "fix" spelling/grammar here.
 //
 // To add a photo to a section: put the image file in
-// assets/images/ and give it a src below (e.g. "assets/images/01.jpg").
-// Leave image as null to keep the placeholder block.
+// assets/images/ and give it a src below — it MUST be in quotes,
+// e.g. image: "assets/images/01.jpg" (without the quotes, that line
+// crashes the whole script and every button on the page stops
+// working). Leave image as null to keep the placeholder block.
 //
-// "note" is optional — a short caption that shows up next to the
-// photo with a little arrow pointing at it (works on the card AND
-// on the expanded/lightbox view of the same photo). Leave it null
-// if you don't want a note on that card.
+// "note" is a short caption that shows up next to the photo with a
+// little arrow pointing at it (works on the card AND on the
+// expanded/lightbox view of the same photo). Change the text or
+// set it to null if you don't want a note on that card.
 const letterContent = [
   {
-    image: assets/images/01.jpg, // 
-    note: null,
+    image: "assets/images/01.jpg",
+    note: "note here",
     paragraphs: [
       "I know wakoy mahatag nga something expensive sa imoha this year and to be honest ba, I wished I could give you more jud hayss. But I wanted to make something nga gikan jud nako like something I could build with my own hands ba and fill with the things na di nako masulti tarung in person.",
       "So I made this little website for you lovelove."
     ]
   },
   {
-    image: assets/images/02.jpg, // 
+    image: "assets/images/02.jpg",
     note: "test daw",
     paragraphs: [
       "It may not be perfect and it definitely isn't worth as much sa uban gifts na maihatag sa uban nimo, but every part of it was made with you in mind. Every word here is something I genuinely wanted you to have and remember."
     ]
   },
   {
-    image: assets/images/03.jpg, //
-    note: null,
+    image: "assets/images/03.jpg",
+    note: "note here",
     paragraphs: [
       "You've become such a big part of my life, Love. We've been through happy moments(nga sge ka mangaway), stupid moments, misunderstandings, difficult days, and moments where we weren't sure how things would go. Pero tanawa for some reason, abut gihapun ta ani."
     ]
   },
   {
-    image: assets/images/04.jpg, // 
-    note: null,
+    image: "assets/images/04.jpg",
+    note: "note here",
     paragraphs: [
       "I don't want to pretend nga atoang relationship has always been perfect. Kay dijud siya perfect. We've both made mistakes, nay time gipang kapoy ta, and there were times when we struggled to understand each other. Pero despite tanan ana, daghan jud kayong moments na grateful kaayo kos imoha ."
     ]
   },
   {
-    image: assets/images/05.jpg, // 
-    note: null,
+    image: "assets/images/05.jpg",
+    note: "note here",
     paragraphs: [
       "I'm grateful for the laughs, the random conversations, the times I get to visit you, the moments with your family, the little things you do for me, and even the ordinary days that don't seem special until I realize that you're the person I got to spend them with."
     ]
   },
   {
-    image: assets/images/06.jpg, // 
-    note: null,
+    image: "assets/images/06.jpg",
+    note: "note here",
     paragraphs: [
       "And on your birthday, I don't just want to tell you that I love you.",
       "I want you to know that I see you as someone who is still growing, still figuring things out, still chasing things you want, and still becoming the person you're meant to be. I hope you never forget nga you deserve to be proud of yourself pud."
     ]
   },
   {
-    image: assets/images/07.jpg, // 
-    note: null,
+    image: "assets/images/07.jpg",
+    note: "note here",
     paragraphs: [
       `I hope nga kaning tuiga will brings you more peace, more happiness, more opportunities, and more moments where you can look at yourself and say, "I'm doing okay and nana koy Deym" hahaha`
     ]
   },
   {
-    image: assets/images/08.jpg, // 
-    note: null,
+    image: "assets/images/08.jpg",
+    note: "note here",
     paragraphs: [
       "And whatever happens in the future, I hope you remember that there was someone who genuinely wanted to see you happy, who was proud of you, who believed in you, and who loved all the little things that made you you."
     ]
   },
   {
-    image: assets/images/09.jpg, // 
-    note: null,
+    image: "assets/images/09.jpg",
+    note: "note here",
     paragraphs: [
       "Happy motmot and birthday, lovelove nako.",
       "I may not have much na mahatag nako nimo karun, but I gave you something nga kaya nako buhaton",
@@ -84,8 +86,8 @@ const letterContent = [
     ]
   },
   {
-    image: assets/images/10.jpg, // 
-    note: null,
+    image: "assets/images/10.jpg",
+    note: "note here",
     paragraphs: [
       "I hope you like it.",
       "I love you always mwa mwa mwa 😘"
