@@ -495,11 +495,11 @@ button {
   top: -9999px;
   left: -9999px;
   z-index: 90;
-  width: 160px;
+  width: 220px;          /* wider — adjust to taste */
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
+  align-items: center;   /* was flex-end — this centers the arrow under the text */
+  text-align: center;    /* was right — centers the note text */
   color: var(--cream);
   pointer-events: none;
   opacity: 0;
@@ -507,19 +507,10 @@ button {
   transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
 }
 
-.note-callout.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* flex order (not DOM order) puts text above the arrow — flow
-   layout means the box's height adapts automatically to however
-   many lines the note wraps to, so short and long notes both get
-   a consistent gap instead of colliding. */
 .note-callout .note-text {
   order: 1;
-  margin: 0 6px 4px 0;
-  width: 170px;
+  margin: 0 0 4px 0;     /* no more right-side margin needed */
+  width: 200px;          /* match/slightly less than container width */
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
@@ -533,22 +524,6 @@ button {
   width: 85px;
   height: auto;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55));
-}
-.note-callout {
-  position: fixed;
-  top: -9999px;
-  left: -9999px;
-  z-index: 90;
-  width: 180px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
-  color: var(--cream);
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
 }
 /* =========================================================
    LIGHTBOX — tap a photo to expand it
