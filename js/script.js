@@ -20,43 +20,44 @@ const REVEAL_WORDS = ["HAPPY", "BIRTHDAY", "LOVEYYY NAKOOO"];
 const letterContent = [
   {
     image: "assets/images/01.jpg",
-    note: "note here",
+    note: "(click ang photo) Imohang first favorite picture nato duha love",
     paragraphs: [
       "I know wakoy mahatag nga something expensive sa imoha this year and to be honest ba, I wished I could give you more jud hayss. But I wanted to make something nga gikan jud nako like something I could build with my own hands ba and fill with the things na di nako masulti tarung in person.",
       "So I made this little website for you lovelove."
+      "Pwede raka mo click sa mga pictures para mo daks ha?"
     ]
   },
   {
     image: "assets/images/02.jpeg",
-    note: "test daw",
+    note: "Sa panahong lowkey pa buhay natin tiil ray picturan",
     paragraphs: [
       "It may not be perfect and it definitely isn't worth as much sa uban gifts na maihatag sa uban nimo, but every part of it was made with you in mind. Every word here is something I genuinely wanted you to have and remember."
     ]
   },
   {
     image: "assets/images/03.jpg",
-    note: "note here",
+    note: "Seawall momintz pa sila dugay pajd manguli hahaha",
     paragraphs: [
       "You've become such a big part of my life, Love. We've been through happy moments(nga sge ka mangaway), stupid moments, misunderstandings, difficult days, and moments where we weren't sure how things would go. Pero tanawa for some reason, abut gihapun ta ani."
     ]
   },
   {
     image: "assets/images/04.jpeg",
-    note: "note here",
+    note: "First anhi nimos amoa balay lovey hehe",
     paragraphs: [
       "I don't want to pretend nga atoang relationship has always been perfect. Kay dijud siya perfect. We've both made mistakes, nay time gipang kapoy ta, and there were times when we struggled to understand each other. Pero despite tanan ana, daghan jud kayong moments na grateful kaayo kos imoha ."
     ]
   },
   {
     image: "assets/images/05.jpg",
-    note: "note here",
+    note: "First ano natin dalawa wuy HAHAHAHA",
     paragraphs: [
       "I'm grateful for the laughs, the random conversations, the times I get to visit you, the moments with your family, the little things you do for me, and even the ordinary days that don't seem special until I realize that you're the person I got to spend them with."
     ]
   },
   {
     image: "assets/images/06.jpg",
-    note: "note here",
+    note: "Natutulog yung cute nga dragon hehe gwapa jud nimo",
     paragraphs: [
       "And on your birthday, I don't just want to tell you that I love you.",
       "I want you to know that I see you as someone who is still growing, still figuring things out, still chasing things you want, and still becoming the person you're meant to be. I hope you never forget nga you deserve to be proud of yourself pud."
@@ -64,21 +65,21 @@ const letterContent = [
   },
   {
     image: "assets/images/07.png",
-    note: "note here",
+    note: "haysss dini dapat pahilakun akoang cutie nga baby",
     paragraphs: [
       `I hope nga kaning tuiga will brings you more peace, more happiness, more opportunities, and more moments where you can look at yourself and say, "I'm doing okay and nana koy Deym" hahaha`
     ]
   },
   {
     image: "assets/images/08.jpg",
-    note: "note here",
+    note: "fyi excited kayo ko mo skwela sauna kay makita tika pirme kada flag nato",
     paragraphs: [
       "And whatever happens in the future, I hope you remember that there was someone who genuinely wanted to see you happy, who was proud of you, who believed in you, and who loved all the little things that made you you."
     ]
   },
   {
     image: "assets/images/09.jpg",
-    note: "note here",
+    note: "first night date natin dalawa",
     paragraphs: [
       "Happy motmot and birthday, lovelove nako.",
       "I may not have much na mahatag nako nimo karun, but I gave you something nga kaya nako buhaton",
@@ -87,7 +88,7 @@ const letterContent = [
   },
   {
     image: "assets/images/10.jpg",
-    note: "note here",
+    note: "I will always try my best palipayun ka love",
     paragraphs: [
       "I hope you like it.",
       "I love you always mwa mwa mwa 😘"
