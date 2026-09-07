@@ -365,6 +365,7 @@ const lightboxImg = document.getElementById("lightboxImg");
 
 function openLightbox(src, note) {
   lightboxImg.src = src;
+  lightboxImg.draggable = false;
   lightbox.classList.add("open");
   lightbox.setAttribute("aria-hidden", "false");
   // wait a frame so the image has laid out before we measure it
@@ -406,6 +407,8 @@ function buildCardEl(data, index) {
     const img = document.createElement("img");
     img.src = data.image;
     img.alt = "";
+    img.draggable = false;
+    img.addEventListener("dragstart", (e) => e.preventDefault());
     imgWrap.appendChild(img);
   } else {
     const placeholder = document.createElement("span");
