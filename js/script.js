@@ -27,7 +27,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/02.jpg",
+    image: "assets/images/02.jpeg",
     note: "test daw",
     paragraphs: [
       "It may not be perfect and it definitely isn't worth as much sa uban gifts na maihatag sa uban nimo, but every part of it was made with you in mind. Every word here is something I genuinely wanted you to have and remember."
@@ -41,7 +41,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/04.jpg",
+    image: "assets/images/04.jpeg",
     note: "note here",
     paragraphs: [
       "I don't want to pretend nga atoang relationship has always been perfect. Kay dijud siya perfect. We've both made mistakes, nay time gipang kapoy ta, and there were times when we struggled to understand each other. Pero despite tanan ana, daghan jud kayong moments na grateful kaayo kos imoha ."
@@ -63,7 +63,7 @@ const letterContent = [
     ]
   },
   {
-    image: "assets/images/07.jpg",
+    image: "assets/images/07.png",
     note: "note here",
     paragraphs: [
       `I hope nga kaning tuiga will brings you more peace, more happiness, more opportunities, and more moments where you can look at yourself and say, "I'm doing okay and nana koy Deym" hahaha`
@@ -430,6 +430,7 @@ let dragStartX = null;
 let dragging = false;
 let activeFrontEl = null;
 let dragPointerId = null;
+let dragStartImgTarget = null;
 
 const SWIPE_THRESHOLD = 40;
 const TAP_THRESHOLD = 10;
@@ -441,6 +442,11 @@ cardStage.addEventListener("pointerdown", (e) => {
   dragging = true;
   activeFrontEl = front;
   dragPointerId = e.pointerId;
+  // record this BEFORE setPointerCapture — once captured, e.target on
+  // later events (pointerup) gets retargeted to the captured element
+  // (the whole card), so this is the only reliable moment to know
+  // whether the finger actually landed on the photo.
+  dragStartImgTarget = e.target.closest(".card-image");
   activeFrontEl.classList.add("dragging");
   if (activeFrontEl.setPointerCapture) {
     try { activeFrontEl.setPointerCapture(e.pointerId); } catch (err) { /* no-op */ }
@@ -458,8 +464,10 @@ function endDrag(e, commit) {
   dragging = false;
   const deltaX = e.clientX - dragStartX;
   const el = activeFrontEl;
+  const imgTarget = dragStartImgTarget;
   activeFrontEl = null;
   dragPointerId = null;
+  dragStartImgTarget = null;
 
   if (el) {
     el.classList.remove("dragging");
@@ -474,7 +482,6 @@ function endDrag(e, commit) {
   const isTap = Math.abs(deltaX) < TAP_THRESHOLD;
 
   if (isTap) {
-    const imgTarget = e.target.closest(".card-image");
     const imgEl = imgTarget ? imgTarget.querySelector("img") : null;
     if (imgEl) {
       openLightbox(imgEl.src, letterContent[currentCard].note);
